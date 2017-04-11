@@ -18,7 +18,7 @@
       <tr>
         <td><%= index + 1 %> . </td>
         <td colspan="6"><a href="<%= story.url %>"><%= story.title %></a></td>
-        <td colspan="4">Posted at <%= story.created_at %></td>
+        <td colspan="4">Posted at <%= localize(story.created_at, :format => :long) %></td>
         <td colspan="2"><%= story.email %></td>
         <!-- <td>
           <%= link_to story do %>
