@@ -59,3 +59,6 @@ end
 group :production do
   gem 'rails_12factor'
 end
+
+# To make the time look pretty
+gem "hublot", "~> 0.0.6"
