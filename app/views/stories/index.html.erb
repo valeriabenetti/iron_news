@@ -4,40 +4,39 @@
 </div>
 
 <div class="panel panel-default">
-  <table class="table-responsive table table-striped table-bordered table-hover">
-    <thead>
-      <tr>
-        <th colspan="1">#</th>
-        <th colspan ="6">Title</th>
-        <th colspan="4">Created At</th>
-        <th colspan="3">Created By</th>
-      </tr>
-    </thead>
-    <tbody class="table-body">
-      <%- @stories.each.with_index do |story, index| %>
-      <tr>
-        <td><%= index + 1 %> . </td>
-        <td colspan="6"><a href="<%= story.url %>"><%= story.title %></a></td>
-        <td colspan="4">Posted <%= time_ago_in_words(story.created_at) %> ago</td>
-        <td colspan="2"><%= story.created_by.email %></td>
-        <td>
-          <%= link_to story do %>
-            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+  <ul class="list-group">
+    <%- @stories.each.with_index do |story, index| %>
+      <li class="list-group-item">
+        <div class="media">
+          <% if story.image_url %>
+          <div class="media-left">
+            <img class="media-object" src="<%= story.image_url %>" height="74" width="74">
+          </div>
+          <% else %>
+          <div class="media-left">
+            <img class="media-object" src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/dc4c6e55602739.56099094861e1.jpg" height="74" width="74">
+          </div>
           <% end %>
-        </td>
-        <td>
-          <%= link_to edit_story_path(story) do %>
-            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-          <% end %>
-        </td>
-        <td>
-          <%= link_to story, method: :delete, data: { confirm: 'Are you sure?' } do %>
-            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-          <% end %>
-        </td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
+          <div class="media-body">
+            <h4 class="media-heading"><%= index + 1 %> . <a href="<%= story.url %>"><%= story.title %></a></h4>
+            Posted <%= time_ago_in_words(story.created_at) %> ago
+            Created By: <%= story.created_by.email %>
 
+            <div class="pull-right">
+              <%= link_to story do %>
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+              <% end %>
+              <%= link_to edit_story_path(story) do %>
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+              <% end %>
+              <%= link_to story, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              <% end %>
+            </div>
+
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
 </div>

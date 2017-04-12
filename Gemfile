@@ -27,6 +27,11 @@ gem 'jquery-rails'
 # To make the time look pretty
 gem "hublot", "~> 0.0.6"
 
+# Uploading Images
+gem 'shrine'
+gem 'shrine-sql'
+gem 'roda'
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
