@@ -1,6 +1,9 @@
 class StoriesController < ApplicationController
   # GET /stories
+  before_action :authorize!
   def index
+    @page = params[:page].to_i
+    @starting_number = @page == 0 ? 0 : (@page -1) * 20
     @stories = Story.all.sort_by { |obj| obj.created_at }.reverse
   end
 
@@ -17,14 +20,20 @@ class StoriesController < ApplicationController
   # GET /stories/1/edit
   def edit
     @story = Story.find(params[:id])
+
+    unless @story.created_by == current_user
+      redirect_to stories_path, notice: "You must of have written this article in order to edit."
+      return
+    end
   end
 
   # POST /stories
   def create
     @story = Story.new(story_params)
 
+    @story.created_by = current_user
     if @story.save
-      redirect_to @story, notice: 'Story was successfully created.'
+      redirect_to @story, notice: 'Article has been successfully created.'
     else
       render :new
     end
@@ -33,8 +42,14 @@ class StoriesController < ApplicationController
   # PATCH/PUT /stories/1
   def update
     @story = Story.find(params[:id])
+
+    unless @story.created_by == current_user
+      redirect_to @story, notice: 'Article has been successfully created.'
+      return
+    end
+
     if @story.update(story_params)
-      redirect_to @story, notice: 'Story was successfully updated.'
+      redirect_to @story, notice: 'Article was successfully updated.'
     else
       render :edit
     end
@@ -43,13 +58,19 @@ class StoriesController < ApplicationController
   # DELETE /stories/1
   def destroy
     @story = Story.find(params[:id])
+
+    unless @story.created_by == current_user
+      redirect_to stories_path, notice: 'Article has been successfully created.'
+      return
+    end
+
     @story.destroy
-    redirect_to stories_url, notice: 'Story was successfully destroyed.'
+    redirect_to stories_url, notice: 'Article was successfully destroyed.'
   end
 
   private
-    # Only allow a trusted parameter "white list" through.
-    def story_params
-      params.require(:story).permit(:title, :url, :email)
-    end
+  # Only allow a trusted parameter "white list" through.
+  def story_params
+    params.require(:story).permit(:title, :url, :email)
+  end
 end
