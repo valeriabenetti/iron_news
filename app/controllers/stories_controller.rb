@@ -1,9 +1,7 @@
 class StoriesController < ApplicationController
   # GET /stories
-  before_action :authorize!
+  before_action :authorize!, except: [:index]
   def index
-    @page = params[:page].to_i
-    @starting_number = @page == 0 ? 0 : (@page -1) * 20
     @stories = Story.all.sort_by { |obj| obj.created_at }.reverse
   end
 

@@ -7,15 +7,15 @@ class UsersController < ApplicationController
     user = User.new(user_params)
     if user.save
       session[:user_id] = user.id
-#     Redirect to the root, *OR* to whatever the main page of your app is
-#     (if your root_path is your landing page...)
+      # Redirect to the root, *OR* to whatever the main page of your app is
+      # (if your root_path is your landing page...)
       redirect_to root_path
     else
       redirect_to signup_path
    end
   end
 
-private
+  private
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
