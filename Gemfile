@@ -6,7 +6,6 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.2'
 # Use postgresql as the database for Active Record
@@ -25,6 +24,8 @@ gem 'coffee-rails', '~> 4.2'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
+# To make the time look pretty
+gem "hublot", "~> 0.0.6"
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
@@ -59,6 +60,3 @@ end
 group :production do
   gem 'rails_12factor'
 end
-
-# To make the time look pretty
-gem "hublot", "~> 0.0.6"

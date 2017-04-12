@@ -28,8 +28,8 @@ class StoriesController < ApplicationController
   # POST /stories
   def create
     @story = Story.new(story_params)
-
     @story.created_by = current_user
+
     if @story.save
       redirect_to @story, notice: 'Article has been successfully created.'
     else
@@ -58,7 +58,7 @@ class StoriesController < ApplicationController
     @story = Story.find(params[:id])
 
     unless @story.created_by == current_user
-      redirect_to stories_path, notice: 'Article has been successfully created.'
+      redirect_to stories_path, notice: 'You must of have written this article in order to delete.'
       return
     end
 
